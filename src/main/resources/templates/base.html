@@ -1,5 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="parent(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="./output.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
 
-<div th:fragment="parent(x)" >
-    <h1>This is Aprent Fragment and my name is <span th:text="${x}" ></span></h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis accusantium est odio, exercitationem ea explicabo, veniam qui dolore minus doloremque ut itaque doloribus illo ab eveniet quos! Non, accusantium mollitia?</p>
-</div>
+    <div data-th-replace ="navbar::navbar" ></div>
+
+    <section th:replace="${content}"></section>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>

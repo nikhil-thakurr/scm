@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,4 +11,12 @@
 
     <div class="bg-amber-300 text-4xl text-amber-800">this is home page</div>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base::parent(~{::#content})}">
+  <head></head>
+  <body>
+    <div id="content">This is a test</div>
+  </body>
 </html>
