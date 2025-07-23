@@ -28,7 +28,7 @@ public class User {
     private String name;
     @Column(unique = true, nullable = false)
     private String email;
-    @Getter(AccessLevel.NONE)
+    //@Getter(AccessLevel.NONE)
     private String password;
     @Column(length = 1000)
     private String about;
