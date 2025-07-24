@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
+import com.scm.helpers.Message;
+import com.scm.helpers.MessageType;
 import com.scm.services.UserService;
 import com.scm.services.Impl.UserServiceImpl;
 
@@ -49,6 +51,11 @@ public class PageController {
       @RequestMapping(value = "/do-register", method=RequestMethod.POST)
       public String processRegister(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult,
             HttpSession session) {
+
+        if(rBindingResult.hasErrors()){
+            return "register";
+        }        
+
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
@@ -58,8 +65,12 @@ public class PageController {
        // user.setEnabled(false);
         user.setProfilePic(
                 "");
+                User savedUser = userService.saveUser(user);
+                
+                Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+                
+                session.setAttribute("message", message);
 
-        User savedUser = userService.saveUser(user);
           return "redirect:/register";
       }
       
