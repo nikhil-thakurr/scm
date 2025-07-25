@@ -35,6 +35,11 @@ public class PageController {
         return "Home";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return new String("login");
+    }
+
       // registration page
       @GetMapping("/register")
       public String register(Model model) {

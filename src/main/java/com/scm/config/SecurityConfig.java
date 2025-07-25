@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-// import com.scm.services.Impl.SecurityCustomUserDetailService;
+import com.scm.services.Impl.SecurityCustomUserDetailService;
 
 @Configuration
 public class SecurityConfig {
@@ -39,8 +39,8 @@ public class SecurityConfig {
 
     // }
 
-    // @Autowired
-    // private SecurityCustomUserDetailService userDetailService;
+    @Autowired
+    private SecurityCustomUserDetailService userDetailService;
 
     // @Autowired
     // private OAuthAuthenicationSuccessHandler handler;
@@ -53,7 +53,7 @@ public class SecurityConfig {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         // user detail service ka object:
-       // daoAuthenticationProvider.setUserDetailsService(userDetailService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailService);
         // password encoder ka object
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
@@ -78,51 +78,50 @@ public class SecurityConfig {
         // related
         httpSecurity.formLogin(formLogin -> {
 
-            //
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
-            formLogin.successForwardUrl("/user/profile");
+            formLogin.defaultSuccessUrl("/user/dashboard", true);
             // formLogin.failureForwardUrl("/login?error=true");
             // formLogin.defaultSuccessUrl("/home");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
 
-            // formLogin.failureHandler(new AuthenticationFailureHandler() {
+        //     // formLogin.failureHandler(new AuthenticationFailureHandler() {
 
-            // @Override
-            // public void onAuthenticationFailure(HttpServletRequest request,
-            // HttpServletResponse response,
-            // AuthenticationException exception) throws IOException, ServletException {
-            // // TODO Auto-generated method stub
-            // throw new UnsupportedOperationException("Unimplemented method
-            // 'onAuthenticationFailure'");
-            // }
+        //     // @Override
+        //     // public void onAuthenticationFailure(HttpServletRequest request,
+        //     // HttpServletResponse response,
+        //     // AuthenticationException exception) throws IOException, ServletException {
+        //     // // TODO Auto-generated method stub
+        //     // throw new UnsupportedOperationException("Unimplemented method
+        //     // 'onAuthenticationFailure'");
+        //     // }
 
-            // });
+        //     // });
 
-            // formLogin.successHandler(new AuthenticationSuccessHandler() {
+        //     // formLogin.successHandler(new AuthenticationSuccessHandler() {
 
-            // @Override
-            // public void onAuthenticationSuccess(HttpServletRequest request,
-            // HttpServletResponse response,
-            // Authentication authentication) throws IOException, ServletException {
-            // // TODO Auto-generated method stub
-            // throw new UnsupportedOperationException("Unimplemented method
-            // 'onAuthenticationSuccess'");
-            // }
+        //     // @Override
+        //     // public void onAuthenticationSuccess(HttpServletRequest request,
+        //     // HttpServletResponse response,
+        //     // Authentication authentication) throws IOException, ServletException {
+        //     // // TODO Auto-generated method stub
+        //     // throw new UnsupportedOperationException("Unimplemented method
+        //     // 'onAuthenticationSuccess'");
+        //     // }
 
-            // });
-           // formLogin.failureHandler(authFailtureHandler);
+        //     // });
+        //    // formLogin.failureHandler(authFailtureHandler);
 
         });
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        // oauth configurations
+        // // oauth configurations
 
-        httpSecurity.oauth2Login(oauth -> {
-            oauth.loginPage("/login");
-           // oauth.successHandler(handler);
-        });
+        // httpSecurity.oauth2Login(oauth -> {
+        //     oauth.loginPage("/login");
+        //    // oauth.successHandler(handler);
+        // });
 
         httpSecurity.logout(logoutForm -> {
             logoutForm.logoutUrl("/do-logout");
