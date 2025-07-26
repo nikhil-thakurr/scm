@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.scm.services.Impl.SecurityCustomUserDetailService;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig  {
 
     // user create and login using java code with in memory service
 
@@ -40,7 +40,7 @@ public class SecurityConfig {
     // }
 
     @Autowired
-    private SecurityCustomUserDetailService userDetailService;
+    private com.scm.services.Impl.SecurityCustomUserDetailService userDetailService;
 
     // @Autowired
     // private OAuthAuthenicationSuccessHandler handler;
@@ -78,49 +78,50 @@ public class SecurityConfig {
         // related
         httpSecurity.formLogin(formLogin -> {
 
+            //
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
-            formLogin.defaultSuccessUrl("/user/dashboard", true);
+            formLogin.successForwardUrl("/user/profile");
             // formLogin.failureForwardUrl("/login?error=true");
             // formLogin.defaultSuccessUrl("/home");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
 
-        //     // formLogin.failureHandler(new AuthenticationFailureHandler() {
+            // formLogin.failureHandler(new AuthenticationFailureHandler() {
 
-        //     // @Override
-        //     // public void onAuthenticationFailure(HttpServletRequest request,
-        //     // HttpServletResponse response,
-        //     // AuthenticationException exception) throws IOException, ServletException {
-        //     // // TODO Auto-generated method stub
-        //     // throw new UnsupportedOperationException("Unimplemented method
-        //     // 'onAuthenticationFailure'");
-        //     // }
+            // @Override
+            // public void onAuthenticationFailure(HttpServletRequest request,
+            // HttpServletResponse response,
+            // AuthenticationException exception) throws IOException, ServletException {
+            // // TODO Auto-generated method stub
+            // throw new UnsupportedOperationException("Unimplemented method
+            // 'onAuthenticationFailure'");
+            // }
 
-        //     // });
+            // });
 
-        //     // formLogin.successHandler(new AuthenticationSuccessHandler() {
+            // formLogin.successHandler(new AuthenticationSuccessHandler() {
 
-        //     // @Override
-        //     // public void onAuthenticationSuccess(HttpServletRequest request,
-        //     // HttpServletResponse response,
-        //     // Authentication authentication) throws IOException, ServletException {
-        //     // // TODO Auto-generated method stub
-        //     // throw new UnsupportedOperationException("Unimplemented method
-        //     // 'onAuthenticationSuccess'");
-        //     // }
+            // @Override
+            // public void onAuthenticationSuccess(HttpServletRequest request,
+            // HttpServletResponse response,
+            // Authentication authentication) throws IOException, ServletException {
+            // // TODO Auto-generated method stub
+            // throw new UnsupportedOperationException("Unimplemented method
+            // 'onAuthenticationSuccess'");
+            // }
 
-        //     // });
-        //    // formLogin.failureHandler(authFailtureHandler);
+            // });
+           // formLogin.failureHandler(authFailtureHandler);
 
         });
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        // // oauth configurations
+        // oauth configurations
 
         // httpSecurity.oauth2Login(oauth -> {
         //     oauth.loginPage("/login");
-        //    // oauth.successHandler(handler);
+        //     oauth.successHandler(handler);
         // });
 
         httpSecurity.logout(logoutForm -> {

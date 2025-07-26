@@ -12,21 +12,29 @@ import org.springframework.stereotype.Service;
 
 import com.scm.entities.User;
 import com.scm.helpers.AppConstants;
+// import com.scm.helpers.Helper;
 import com.scm.helpers.ResourceNotFoundException;
 import com.scm.repositories.UserRepo;
+// import com.scm.services.EmailService;
 import com.scm.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepo userRepo;
-
+    private com.scm.repositories.UserRepo userRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // @Autowired
+    // private EmailService emailService;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
+    // @Autowired
+    // private  Helper helper;
 
     @Override
     public User saveUser(User user) {
@@ -45,12 +53,11 @@ public class UserServiceImpl implements UserService {
         String emailToken = UUID.randomUUID().toString();
         user.setEmailToken(emailToken);
         User savedUser = userRepo.save(user);
-       // String emailLink = helper.getLinkForEmailVerificatiton(emailToken);
-       // emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart  Contact Manager", emailLink);
+        // String emailLink = helper.getLinkForEmailVerificatiton(emailToken);
+        // emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart  Contact Manager", emailLink);
         return savedUser;
 
     }
-
 
     @Override
     public Optional<User> getUserById(String id) {
@@ -59,6 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(User user) {
+
         User user2 = userRepo.findById(user.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         // update karenge user2 from user
@@ -68,7 +76,7 @@ public class UserServiceImpl implements UserService {
         user2.setAbout(user.getAbout());
         user2.setPhoneNumber(user.getPhoneNumber());
         user2.setProfilePic(user.getProfilePic());
-        // user2.setEnabled(user.isEnabled());
+        user2.setEnabled(user.isEnabled());
         user2.setEmailVerified(user.isEmailVerified());
         user2.setPhoneVerified(user.isPhoneVerified());
         user2.setProvider(user.getProvider());
